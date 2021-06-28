@@ -1,0 +1,85 @@
+{
+  "steps": [
+    {
+      "name": "FallOff Job-Level",
+      "queryfile": "sql/QRY0-falloff-job-lvl.sql",
+      "project_id": "analytics-ahs-owned-thd",
+      "dataset": "{REPORTING_DATASET}",
+      "table": "HDE_FALLOFF_JOB_LVL",
+      "load_type": "insert_overwrite",
+      "order": 0
+    },
+    {
+      "name": "HDIS Scorecard Metrics (stage before joining in subsequent queries)",
+      "queryfile": "sql/QRY0-hdis-scorecard-metrics.sql",
+      "project_id": "analytics-ahs-owned-thd",
+      "dataset": "{STAGING_DATASET}",
+      "table": "HDE_FALLOFF_HDIS_SCORECARD_METRICS_BRANCH_{RUN_DATE}",
+      "load_type": "insert_overwrite",
+      "order": 0
+    },
+    {
+      "name": "FallOff Job-Level: SCN",
+      "queryfile": "sql/QRY1-falloff-job-lvl-scn.sql",
+      "project_id": "analytics-ahs-owned-thd",
+      "dataset": "{STAGING_DATASET}",
+      "table": "HDE_FALLOFF_JOB_LVL_SCN_{RUN_DATE}",
+      "load_type": "insert_overwrite",
+      "order": 1
+    },
+    {
+      "name": "Fall Off metrics (bottom 5 Branch)",
+      "queryfile": "sql/QRY1-hde-fall-off-branch.sql",
+      "project_id": "analytics-ahs-owned-thd",
+      "dataset": "{REPORTING_DATASET}",
+      "table": "HDE_FALLOFF_BRANCH",
+      "load_type": "insert_overwrite",
+      "order": 1
+    },
+    {
+      "name": "Fall Off metrics (Region)",
+      "queryfile": "sql/QRY1-hde-fall-off-region.sql",
+      "project_id": "analytics-ahs-owned-thd",
+      "dataset": "{REPORTING_DATASET}",
+      "table": "HDE_FALLOFF_REGION",
+      "load_type": "insert_overwrite",
+      "order": 1
+    },
+    {
+      "name": "FallOff Report (Excel): Division/Region",
+      "queryfile": "sql/QRY2-falloff-report-excel-by-region.sql",
+      "project_id": "analytics-ahs-owned-thd",
+      "dataset": "{STAGING_DATASET}",
+      "table": "HDE_FALLOFF_EXCEL_DIVISION_REGION_{RUN_DATE}",
+      "load_type": "insert_overwrite",
+      "order": 2
+    },
+    {
+      "name": "FallOff Report (Excel): Bottom 5 Branch",
+      "queryfile": "sql/QRY2-falloff-report-excel-bottom-5-branch.sql",
+      "project_id": "analytics-ahs-owned-thd",
+      "dataset": "{STAGING_DATASET}",
+      "table": "HDE_FALLOFF_EXCEL_BOTTOM_5_BRANCH_PER_DIVISION_{RUN_DATE}",
+      "load_type": "insert_overwrite",
+      "order": 2
+    },
+    {
+      "name": "Appointment Details",
+      "queryfile": "sql/QRY3-falloff-appointments-details.sql",
+      "project_id": "analytics-ahs-owned-thd",
+      "dataset": "{REPORTING_DATASET}",
+      "table": "APPOINTMENTS_DETAILS",
+      "load_type": "insert_overwrite",
+      "order": 3
+    },
+    {
+      "name": "Job with Appointment Details",
+      "queryfile": "sql/QRY4-hde-falloff-job-appt-detail.sql",
+      "project_id": "analytics-ahs-owned-thd",
+      "dataset": "{REPORTING_DATASET}",
+      "table": "HDE_FALLOFF_JOB_APPT_DETAIL",
+      "load_type": "insert_overwrite",
+      "order": 4
+    }
+  ]
+}
