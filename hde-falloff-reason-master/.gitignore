@@ -1,0 +1,6 @@
+venv
+.idea
+**/.ipynb_checkpoints
+src/data.csv
+src/kmeans_final
+src/kmeans_models
